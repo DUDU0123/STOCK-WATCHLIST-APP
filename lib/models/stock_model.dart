@@ -10,13 +10,10 @@ class StockModel extends Equatable {
   String? companyName;
   @HiveField(2)
   String? sharePrice;
-  @HiveField(3)
-  String? symbol;
   StockModel({
     this.id,
     this.companyName,
     this.sharePrice,
-    this.symbol,
   });
 
   StockModel copyWith({
@@ -29,7 +26,6 @@ class StockModel extends Equatable {
       id: id ?? this.id,
       companyName: companyName ?? this.companyName,
       sharePrice: sharePrice ?? this.sharePrice,
-      symbol: symbol ?? this.symbol,
     );
   }
 
@@ -38,6 +34,5 @@ class StockModel extends Equatable {
         id,
         companyName,
         sharePrice,
-        symbol,
       ];
 }

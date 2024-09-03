@@ -20,22 +20,19 @@ class StockModelAdapter extends TypeAdapter<StockModel> {
       id: fields[0] as int?,
       companyName: fields[1] as String?,
       sharePrice: fields[2] as String?,
-      symbol: fields[3] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, StockModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.companyName)
       ..writeByte(2)
-      ..write(obj.sharePrice)
-      ..writeByte(3)
-      ..write(obj.symbol);
+      ..write(obj.sharePrice);
   }
 
   @override
