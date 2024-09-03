@@ -24,37 +24,33 @@ class StockData {
   }
 
   Future<bool> addToBox({required StockModel stockModel}) async {
-  try {
-    final stockList = stockBox.values.toList();
-    final isAlreadyAdded = stockList.any((stock) => stock.companyName == stockModel.companyName);
+    try {
+      final stockList = stockBox.values.toList();
+      final isAlreadyAdded =
+          stockList.any((stock) => stock.companyName == stockModel.companyName);
 
-    if (!isAlreadyAdded) {
-      final addedStockId = await stockBox.add(stockModel);
-      log('Added Stock ID: $addedStockId');      final updatedStockModel = stockModel.copyWith(id: addedStockId);
-      await stockBox.put(addedStockId, updatedStockModel);
-      log('Updated Stock Model: $updatedStockModel');
-      return true;
-    } else {
-      DialogSnackbarHelper.showSnackbar(
-        context: navigatorKey!.currentContext!,
-        snackBarContent: "Already added",
-      );
+      if (!isAlreadyAdded) {
+        final addedStockId = await stockBox.add(stockModel);
+        final updatedStockModel = stockModel.copyWith(id: addedStockId);
+        await stockBox.put(addedStockId, updatedStockModel);
+        return true;
+      } else {
+        DialogSnackbarHelper.showSnackbar(
+          context: navigatorKey!.currentContext!,
+          snackBarContent: "Already added",
+        );
+        return false;
+      }
+    } catch (e) {
       return false;
     }
-  } catch (e) {
-    log('Error in addToBox: $e');
-    return false;
   }
-}
-
 
   List<StockModel> getAllStocksFromBox() {
     try {
       final stocks = stockBox.values.toList();
-      log('All Stocks from Box: $stocks');
       return stocks;
     } catch (e) {
-      log('Error in getAllStocksFromBox: $e');
       return [];
     }
   }
@@ -72,6 +68,7 @@ class StockData {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
+        log(name: "Data printing::", data.toString());
         if (data['bestMatches'] != null && data['bestMatches'] is List) {
           final List<dynamic> symbols = data['bestMatches'];
           final List<StockModel> stocks = [];
@@ -85,16 +82,32 @@ class StockData {
 
             final sharePriceResponse = await http.get(Uri.parse(sharePriceUrl));
             if (sharePriceResponse.statusCode == 200) {
-              final priceData = json.decode(sharePriceResponse.body);
-              final String sharePrice = priceData['Global Quote']['05. price'];
+              try {
+                final priceData = json.decode(sharePriceResponse.body);
+                if (priceData['Global Quote'] != null &&
+                    priceData['Global Quote']['05. price'] != null) {
+                  final String sharePrice =
+                      priceData['Global Quote']['05. price'];
 
-              final stockModel = StockModel(
-                id: null,
-                companyName: symbolCompanyName,
-                sharePrice: sharePrice,
-              );
+                  final stockModel = StockModel(
+                    id: null,
+                    companyName: symbolCompanyName,
+                    sharePrice: sharePrice,
+                  );
 
-              stocks.add(stockModel);
+                  stocks.add(stockModel);
+                } else {
+                  log('Price data for $symbolName is missing');
+                  stocks.add(StockModel(
+                    id: null,
+                    companyName: symbolCompanyName,
+                    sharePrice: 'N/A',
+                  ));
+                }
+              } catch (e) {
+                log('Error parsing price data for $symbolName: ${e.toString()}');
+                continue;
+              }
             }
           }
 
@@ -107,21 +120,10 @@ class StockData {
         log('Failed to load stock data');
         return [];
       }
-    } on SocketException {
-      DialogSnackbarHelper.showDialogBox(
-        context: navigatorKey!.currentContext!,
-        dialogTitle: 'Network Error',
-        dialogContent: "Please check your network connection",
-        actionButtonName: "Ok",
-        buttonActionMethod: () {
-          navigatorKey?.currentState?.pop();
-        },
-      );
-      return [];
-    }on HttpException catch (e) {
+    } on HttpException catch (e) {
       log(e.toString());
       return [];
-    }catch (e) {
+    } catch (e) {
       log(e.toString());
       return [];
     }

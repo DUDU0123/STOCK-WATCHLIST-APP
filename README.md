@@ -19,7 +19,8 @@ This application helps to view the share price of companies.
 To run this application successfully on your device:
 
 1. Clone this repository.
-2. Open the terminal in your IDE and run the following command: `flutter pub get`.
-3. Obtain an API key from the [Alphavantage website](https://www.alphavantage.co).
-4. Use the API key to make requests and fetch data.
-5. After completing these steps, you can successfully run the application.
+2. Open this repository in your IDE after clone.
+3. Open the terminal in your IDE and run the following command: `flutter pub get`.
+4. Obtain an API key from the [Alphavantage website](https://www.alphavantage.co).
+5. Use the API key to make requests and fetch data.
+6. After completing these steps, you can successfully run the application.

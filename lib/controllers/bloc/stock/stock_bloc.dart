@@ -57,12 +57,14 @@ class StockBloc extends Bloc<StockEvent, StockState> {
       emit(StockErrorState(errorMessage: e.toString()));
     }
   }
-
   Future<FutureOr<void>> getStocksFromApiEvent(
       GetStocksFromApiEvent event, Emitter<StockState> emit) async {
     emit(StockLoadingState());
+    if (event.searchQuery.isEmpty) {
+      emit(state.copyWith(searchedList:Future.value(<StockModel>[])));
+    }
     try {
-     final searchedStocks = await stockData.getCompanies(companyName: event.searchQuery);
+     final searchedStocks = stockData.getCompanies(companyName: event.searchQuery);
      log(searchedStocks.toString());
      emit(state.copyWith(searchedList: searchedStocks));
     } catch (e) {

@@ -6,10 +6,10 @@ class StockState extends Equatable {
     this.searchedList,
   });
   final List<StockModel>? stockList;
-  final List<StockModel>? searchedList;
+  final Future<List<StockModel>>? searchedList;
   StockState copyWith({
     List<StockModel>? stockList,
-    List<StockModel>? searchedList,
+    Future<List<StockModel>>? searchedList,
   }) {
     return StockState(
         stockList: stockList ?? this.stockList,

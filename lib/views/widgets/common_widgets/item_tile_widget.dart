@@ -7,6 +7,7 @@ Widget itemTileWidget({
   required IconData? icon,
   required void Function()? trailingButtonAction,
   required String title,
+  required String price,
 }) {
   return ListTile(
     onTap: onTap,
@@ -19,13 +20,23 @@ Widget itemTileWidget({
       fontSize: 18,
       overflow: TextOverflow.ellipsis,
     ),
-    trailing: IconButton(
-      onPressed: trailingButtonAction,
-      icon: Icon(
-        icon,
-        color: kBlack,
-        size: 30,
-      ),
+    trailing: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        TextWidgetCommon(
+          text: price != 'N/A' ? '\$$price' : price,
+          fontSize: 12,
+          overflow: TextOverflow.ellipsis,
+        ),
+        IconButton(
+          onPressed: trailingButtonAction,
+          icon: Icon(
+            icon,
+            color: kBlack,
+            size: 30,
+          ),
+        ),
+      ],
     ),
   );
 }
