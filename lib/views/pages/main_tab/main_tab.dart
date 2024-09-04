@@ -7,7 +7,7 @@ import 'package:stock_watchlist/views/pages/watchlist/watchlist_page.dart';
 import 'package:stock_watchlist/views/widgets/common_widgets/text_widget_common.dart';
 
 final pages = [
-  HomePage(),
+  const HomePage(),
   const WatchlistPage(),
 ];
 
