@@ -25,10 +25,10 @@ BlocBuilder<StockBloc, StockState> searchListWidget() {
         ); 
             }
             if (snapshot.data == null) {
-              return commonEmptyWidget();
+              return commonEmptyWidget(text: "Search for companies");
             }
             if (snapshot.data!.isEmpty) {
-              return commonEmptyWidget();
+              return commonEmptyWidget(text: "Search for companies");
             }
             return ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
