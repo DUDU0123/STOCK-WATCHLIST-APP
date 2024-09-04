@@ -24,3 +24,9 @@ To run this application successfully on your device:
 4. Obtain an API key from the [Alphavantage website](https://www.alphavantage.co).
 5. Use the API key to make requests and fetch data.
 6. After completing these steps, you can successfully run the application.
+7. To visit the live application go to [Amazon App Store](https://www.amazon.com/gp/product/B0DFZ542H5)
+
+BE AWARE:
+
+1. This [Alphavantage api](https://www.alphavantage.co) have rate limit before you make 25 requests.
+2. So you can use a vpn to make the data visible when searching on application. If needed.
