@@ -32,11 +32,15 @@ class _MainTabState extends State<MainTab> {
       appBar: AppBar(
         centerTitle: true,
         automaticallyImplyLeading: false,
-        title: TextWidgetCommon(text: context.watch<NavigationCubit>().state.currentIndex==0? "Home":"Watchlist" ,fontWeight: FontWeight.bold,),
+        title: TextWidgetCommon(
+          text: context.watch<NavigationCubit>().state.currentIndex == 0
+              ? "Home"
+              : "Watchlist",
+          fontWeight: FontWeight.bold,
+        ),
       ),
       body: BlocConsumer<NavigationCubit, NavigationState>(
         listener: (context, state) {
-          // pageController.jumpToPage(state.currentIndex);
           pageController.animateToPage(
             state.currentIndex,
             duration: const Duration(milliseconds: 500),

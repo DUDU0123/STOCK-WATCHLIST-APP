@@ -22,7 +22,7 @@ class StockData {
       return false;
     }
   }
-
+  // add stock to db
   Future<bool> addToBox({required StockModel stockModel}) async {
     try {
       final stockList = stockBox.values.toList();
@@ -46,6 +46,7 @@ class StockData {
     }
   }
 
+  // get all stocks from db
   List<StockModel> getAllStocksFromBox() {
     try {
       final stocks = stockBox.values.toList();
