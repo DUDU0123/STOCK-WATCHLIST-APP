@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:hive_flutter/hive_flutter.dart';
@@ -18,7 +17,6 @@ class StockData {
       await stockBox.delete(stockID);
       return true;
     } catch (e) {
-      log(e.toString());
       return false;
     }
   }
@@ -63,13 +61,10 @@ class StockData {
     try {
       final searchUrl =
           'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=$companyName&apikey=$stockMarketApiKey';
-      log(searchUrl);
       final response = await http.get(Uri.parse(searchUrl));
-      log(response.body);
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        log(name: "Data printing::", data.toString());
         if (data['bestMatches'] != null && data['bestMatches'] is List) {
           final List<dynamic> symbols = data['bestMatches'];
           final List<StockModel> stocks = [];
@@ -98,7 +93,6 @@ class StockData {
 
                   stocks.add(stockModel);
                 } else {
-                  log('Price data for $symbolName is missing');
                   stocks.add(StockModel(
                     id: null,
                     companyName: symbolCompanyName,
@@ -106,7 +100,6 @@ class StockData {
                   ));
                 }
               } catch (e) {
-                log('Error parsing price data for $symbolName: ${e.toString()}');
                 continue;
               }
             }
@@ -114,18 +107,14 @@ class StockData {
 
           return stocks;
         } else {
-          log('bestMatches key is missing or not a list');
           return [];
         }
       } else {
-        log('Failed to load stock data');
         return [];
       }
     } on HttpException catch (e) {
-      log(e.toString());
       return [];
     } catch (e) {
-      log(e.toString());
       return [];
     }
   }

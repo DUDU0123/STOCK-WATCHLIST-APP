@@ -4,8 +4,8 @@ import 'package:stock_watchlist/views/widgets/common_widgets/text_widget_common.
 
 Widget itemTileWidget({
   void Function()? onTap,
-  required IconData? icon,
-  required void Function()? trailingButtonAction,
+   IconData? icon,
+   void Function()? trailingButtonAction,
   required String title,
   required String price,
 }) {

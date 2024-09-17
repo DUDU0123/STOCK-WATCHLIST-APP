@@ -19,7 +19,7 @@ class StockBloc extends Bloc<StockEvent, StockState> {
     on<GetStocksFromApiEvent>(getStocksFromApiEvent);
   }
 
-  FutureOr<void> getAllStocksFromDBEvent(
+   FutureOr<void> getAllStocksFromDBEvent(
       GetAllStocksFromDBEvent event, Emitter<StockState> emit) {
     try {
       final stockList = stockData.getAllStocksFromBox();
@@ -71,5 +71,4 @@ class StockBloc extends Bloc<StockEvent, StockState> {
       emit(StockErrorState(errorMessage: e.toString()));
     }
   }
-
 }
